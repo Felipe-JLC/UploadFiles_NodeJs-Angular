@@ -1,0 +1,23 @@
+<p>upload-files works!</p>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <form action="api/upload" method="POST" enctype="multipart/form-data">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"  (click)="onUpload()">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="onFileChange ($event)">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>      
+</div>
