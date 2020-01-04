@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { UploadFilesComponent } from './componets/upload-files/upload-files.component';
+import { UploadFilesService } from './services/upload-files.service';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -10,9 +12,10 @@ import { UploadFilesComponent } from './componets/upload-files/upload-files.comp
     UploadFilesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UploadFilesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

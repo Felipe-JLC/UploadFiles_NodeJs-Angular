@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadFilesService} from '../../services/upload-files.service'
 
 @Component({
   selector: 'app-upload-files',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class UploadFilesComponent implements OnInit {
 
   uploadedFiles:Array <File>;//se declara una vriable array de tipo file
-  constructor() { }
+  constructor(private uploadService:UploadFilesService) { }
 
   ngOnInit() {
   }
@@ -23,7 +24,19 @@ export class UploadFilesComponent implements OnInit {
   }else {
     for (let index = 0; index < this.uploadedFiles.length; index++) {
       fordata.append("uploads[]",this.uploadedFiles[index], this.uploadedFiles[index].name); //nombre de campo, valor(blob,file,cadena), nombre del archivo
-      alert("archivo subido");
+      
+
+        this.uploadService.uploadFile(fordata).subscribe((res)=>{
+          console.log('Response:',res);
+          alert("archivo subido");
+        }, (error) => {
+          console.error(error);
+          console.log("error:" +JSON.stringify(error));
+          alert("Ocurrio un error en la conecxion del servicio , vuelva intentar mas tarte por favor");
+          
+        });
+        
+      
     }
   }
     
