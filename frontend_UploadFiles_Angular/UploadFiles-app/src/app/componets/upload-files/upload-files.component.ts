@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadFilesService} from '../../services/upload-files.service'
+import { UploadFilesService} from '../../services/upload-files.service';
+import Swal from'sweetalert2';
 
 @Component({
   selector: 'app-upload-files',
@@ -16,10 +17,20 @@ export class UploadFilesComponent implements OnInit {
 
   onUpload(){
     console.log("Upload");
+    console.log(this.uploadedFiles);
   //  alert("Upload");
     let fordata=new FormData();//se utiliza para construir un objeto
-    if(this.uploadedFiles==null){
-    alert("no ha seleccionado ningun archivo");
+    //console.log(this.uploadedFiles.length);
+    console.log(this.uploadedFiles);
+    
+    
+    if(this.uploadedFiles==null || this.uploadedFiles.length==0 ){
+      Swal.fire(
+        'No selecciono ningunarchivo',
+        'por favor selecciones un archivo',
+        'question'
+      );
+   
      
   }else {
     for (let index = 0; index < this.uploadedFiles.length; index++) {
@@ -28,11 +39,27 @@ export class UploadFilesComponent implements OnInit {
 
         this.uploadService.uploadFile(fordata).subscribe((res)=>{
           console.log('Response:',res);
-          alert("archivo subido");
+         // alert("archivo subido");
+         var json=JSON.stringify(res);//se convierte el json string 
+         var objeto = JSON.parse(json); // el json que esta ne string se convierte en objeto     
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: objeto.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
         }, (error) => {
           console.error(error);
           console.log("error:" +JSON.stringify(error));
-          alert("Ocurrio un error en la conecxion del servicio , vuelva intentar mas tarte por favor");
+        //  alert("Ocurrio un error en la conecxion del servicio , vuelva intentar mas tarte por favor");
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'lo siento currio un error rn la connecion del servicio, vuelva aintentar mas tarde por favor',
+       
+          });
           
         });
         
